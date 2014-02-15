@@ -1,10 +1,16 @@
 # Rust运行时指南
 
-A Guide to the Rust Runtime, by Alex Crichton and Brian Anderson
+[A Guide to the Rust Runtime][source], by Alex Crichton and Brian Anderson
+[source]: http://static.rust-lang.org/doc/master/guide-runtime.html
 
-翻译：庄晓立（Liigo），com.liigo@gmail.com, G+,Weibo,CSDN,Rust中文圈
+翻译：庄晓立（Liigo），com.liigo@gmail.com, [G+][g],[Weibo][w],[CSDN][c],[Rust中文圈][r]
 
 日期：2014年2月。
+
+[g]: https://plus.google.com/+LiigoZhuang
+[w]: http://weibo.com/liigo
+[c]: http://blog.csdn.net/liigo
+[r]: https://plus.google.com/communities/100629002107624231185
 
 Rust编程语言的标准发行版包含两个运行时库（libgreen和libnative），提供I/O等基础设施的统一接口。但对Rust语言本身而言，运行时（runtime）并不是必需的；Rust编译器可以生成在所有环境中运行的代码，包括内核（kernel）环境。Rust语言也不需要运行时提供内存安全，因为它的类型系统本身已经足够安全——通过编译时静态验证给予保证。运行时只是利用语言的安全特性提供一系列便利的、安全的、高层的抽象。
 
@@ -133,12 +139,22 @@ fn main() {}
 
 运行时的源代码分散在以下多个地方：
 
- - std::rt
- - libnative
- - libgreen
- - librustuv
+ - [std::rt](http://static.rust-lang.org/doc/master/std/rt/index.html)
+ - [libnative](http://static.rust-lang.org/doc/master/native/index.html)
+ - [libgreen](http://static.rust-lang.org/doc/master/green/index.html)
+ - [librustuv](http://static.rust-lang.org/doc/master/rustuv/index.html)
+
 
 ---------------- 全文完 ----------------
 
-译者Liigo注：这篇文章英文[原文][1]多有重复混乱的地方，而我限于英文水平和Rust技术水平，有时也不能完全理解原意。如有翻译不周之处，敬请谅解，并恳请指正。
+译者Liigo注：这篇文章英文[原文][1]多有重复混乱处，而我限于英文水平和Rust技术水平，有时也不能完全理解原意。如有翻译不周，敬请谅解，并恳请指正。我的联系方式在本文开头。
 [1]: http://static.rust-lang.org/doc/master/guide-runtime.html
+
+
+本文地址：
+
+ - CSDN：http://blog.csdn.net/liigo/article/details/19249145
+ - Github：https://github.com/liigo/learn-rust/blob/master/doc/guide-runtime-zh.md
+ - Gdrive：https://docs.google.com/document/d/1uqW9BfPtop9_Nuj0akGRtotsjO0WfkJj3JZ-5gDLAds
+ - Rust中文圈：https://plus.google.com/+LiigoZhuang/posts/5wAqgkJxq1m
+ - PDF可打印版：https://github.com/liigo/learn-rust/blob/master/doc/guide-runtime-zh.pdf
