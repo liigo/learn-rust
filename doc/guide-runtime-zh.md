@@ -149,3 +149,12 @@ fn main() {}
 
 译者Liigo注：这篇文章英文[原文][1]多有重复混乱处，而我限于英文水平和Rust技术水平，有时也不能完全理解原意。如有翻译不周，敬请谅解，并恳请指正。我的联系方式在本文开头。
 [1]: http://static.rust-lang.org/doc/master/guide-runtime.html
+
+
+本文地址：
+
+ - CSDN：http://blog.csdn.net/liigo/article/details/19249145
+ - Github：https://github.com/liigo/learn-rust/blob/master/doc/guide-runtime-zh.md
+ - Gdrive：https://docs.google.com/document/d/1uqW9BfPtop9_Nuj0akGRtotsjO0WfkJj3JZ-5gDLAds
+ - Rust中文圈：https://plus.google.com/+LiigoZhuang/posts/5wAqgkJxq1m
+ - PDF可打印版：https://github.com/liigo/learn-rust/blob/master/doc/guide-runtime-zh.pdf
