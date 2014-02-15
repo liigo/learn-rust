@@ -157,4 +157,4 @@ fn main() {}
  - Github：https://github.com/liigo/learn-rust/blob/master/doc/guide-runtime-zh.md
  - Gdrive：https://docs.google.com/document/d/1uqW9BfPtop9_Nuj0akGRtotsjO0WfkJj3JZ-5gDLAds
  - Rust中文圈：https://plus.google.com/+LiigoZhuang/posts/5wAqgkJxq1m
- - PDF可打印版：https://github.com/liigo/learn-rust/blob/master/doc/guide-runtime-zh.pdf
+ - PDF可打印版：https://github.com/liigo/learn-rust/raw/master/doc/guide-runtime-zh.pdf
