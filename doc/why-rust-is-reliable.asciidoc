@@ -1,0 +1,368 @@
+= 为什么我说Rust是靠谱的编程语言
+Liigo Zhuang <com.liigo@gmail.com>
+version 1.0, 2015.
+
+....
+作者：Liigo（庄晓立）
+时间：2015年5月16日
+原创链接：http://blog.csdn.net/liigo/article/details/45757123
+版权声明：未经作者许可不得转载；授权转载需注明出处。
+....
+
+序言：本文试图帮您解答“我要不要（投入大量时间和精力）学习Rust语言？”这个问题。作者尽量较少的谈及Rust语言本身，反而尝试从Rust语言周边入手，长时间、大范围、多角度地考察，研判Rust语言是否靠谱，并给出尽可能客观的理由。为写成本文，作者Liigo不惜“卧底”Rust“老巢”长达一年多，收集整理总结了大量信息。如果嫌长，可以只看小标题，粗略浏览一番。
+
+
+== Rust编程语言
+
+http://www.rust-lang.org/[Rust](http://blog.rust-lang.org/[blog])是一门强调安全、并发、高效的系统编程语言。其中四个关键词，系统编程、安全、并发、高效，是Rust语言的核心特征，也是区别于其他编程语言的首要因素。
+
+- Memory safety without garbage collection
+- Concurrency without data races
+- Abstraction without overhead
+
+除此之外，我再补充一些关键词，以便读者更直观地了解Rust：静态类型/编译式语言/静态编译/动态编译、泛型/函数式/面向对象、模式匹配/ADT、DST/HKT/Associated Types/闭包(Closures)、Static/Dynamic/Multiple-Dispatch、
+没有虚拟机(VM)、没有垃圾收集器(GC)、没有运行时(Runtime)、没有空指针/野指针/内存越界/缓冲区溢出/段错误、没有数据竞争(Data Race)……
+
+Rust语言具有特性丰富、设计优良、适用范围广等诸多优点。
+
+我(Liigo)从2013年底开始正式关注Rust项目，……至今有一年半了。其中有赞有批，有争有闹，也有贡献源码。本文所写的是我这些日子以来的所看、所闻、所感。
+
+判断一门新的编程语言“是否靠谱”，是主观性很大的课题。Rust语言今日才刚刚发布1.0版本，它的未来发展走向如何，谁也说不清楚，说到底都是猜测。但是直觉告诉我，如果人靠谱、团队靠谱、技术能力靠谱、态度靠谱、社区靠谱，这个项目在很大程度上就是靠谱的、值得期待的。
+
+谨以此文，献给我长久期待的 http://blog.rust-lang.org/2015/05/15/Rust-1.0.html[Rust 1.0]！
+
+== 开放、友好、高效的开源社区
+
+相当彻底的开源项目，开放、透明、友好，进度热火朝天，动作大刀阔斧。这是我第一次亲身参与并观察到的如此大规模的开源编程语言项目的开发过程。（之前也关注过Go语言项目，但其规模要小得多。）
+
+- 开放源代码、GitHub/Git在线开发 https://github.com/rust-lang/rust
+- 开放系统设计过程，重要设计项目的提出、讨论、评估、决策均在线进行(https://github.com/rust-lang/rfcs[RFCs])
+- 内部决策过程也公开透明，每周发布会议记录(https://github.com/rust-lang/meeting-minutes[meetimg-minutes])
+- 公开接受第三方开发者提交的 https://github.com/rust-lang/rust/pulls[Pull Requests]，必要时还指导开发
+- 有一个核心团队(https://github.com/rust-lang/rust-wiki-backup/blob/master/Note-core-team.md[the core team])负责项目的发展方向和最终决策
+- 有大量的（超过 https://github.com/rust-lang/rust/blob/master/AUTHORS.txt[1000] 人!）第三方开发者给Rust贡献源代码、文档和测试用例
+- 多次将优秀的第三方开发者吸纳进入官方开发团队和核心团队
+- 多次在世界各地（包括北京）主办和协办小型本地开发者见面会
+- https://chat.mibbit.com/?server=irc.mozilla.org&channel=%23rust[IRC], http://internals.rust-lang.org[internals], https://reddit.com/r/rust[Reddit/r/rust], https://hn.algolia.com/?query=Rust&sort=byPopularity&prefix&page=0&dateRange=all&type=story[HN(Hacker News)], https://stackoverflow.com/questions/tagged/rust?sort=frequent[StackOverflow]有许多跟Rust相关的技术讨论，常见核心开发者参与其中
+- Github上用Rust语言开发的项目也风风火火（详见下文）
+
+“**热火朝天**”，用于形容其工程量大、进度快、成效显著。看看Rust的 https://github.com/rust-lang/rust/blob/master/RELEASES.md[Release Notes]，常见这类字眼：
+
+- Version 1.0.0 (May 2015): ~1500 changes, numerous bugfixes
+- Version 1.0.0-alpha.2 (February 2015): ~1300 changes, numerous bugfixes
+- Version 1.0.0-alpha (January 2015): ~2400 changes, numerous bugfixes
+- Version 0.12.0 (October 2014): ~1900 changes, numerous bugfixes
+- Version 0.11.0 (July 2014): ~1700 changes, numerous bugfixes
+- Version 0.10 (April 2014): ~1500 changes, numerous bugfixes
+- Version 0.9 (January 2014): ~1800 changes, numerous bugfixes
+- Version 0.8 (September 2013): ~2200 changes, numerous bugfixes
+- ......
+
+还有很多就不一一列出了。Rust自从2012年1月20日发布0.1版，到现在的1.0正式版，平均每隔三个月发布一版，每次升级改进都多达一两千项。
+Rust是在GitHub/Git上在线开发的，开发者对源代码的每一项改动（commits）都被版本管理系统记录在案，有据可查。
+大多数是实质性的功能升级，不存在靠修改标点、配置文件、拼写错误、或者每改三五行代码就提交的凑数行为（在此严重鄙视Atom编辑器、Kotlin语言）。
+反而常见动不动就 https://github.com/rust-lang/rust/pull/16453[一] https://github.com/rust-lang/rust/pull/22172[次] https://github.com/rust-lang/rust/pull/16377[提] https://github.com/rust-lang/rust/pull/17669[交] https://github.com/rust-lang/rust/pull/21972[上] https://github.com/rust-lang/rust/pull/21759[千] https://github.com/rust-lang/rust/pull/20482[行] 甚至 https://github.com/rust-lang/rust/pull/13901[上] https://github.com/rust-lang/rust/pull/13700[万] 行 Rust 代码的情况， https://github.com/rust-lang/rust/pull/19448[例] https://github.com/rust-lang/rust/pull/18993[子] https://github.com/rust-lang/rust/pull/20179[比] https://github.com/rust-lang/rust/pull/18827[比] https://github.com/rust-lang/rust/pull/18967[皆] https://github.com/rust-lang/rust/pull/16156[是]， https://github.com/rust-lang/rust/pull/14638[。] https://github.com/rust-lang/rust/pull/22971[。] https://github.com/rust-lang/rust/pull/21689[。]
+
+有一个网站叫 http://this-week-in-rust.org["This Week in Rust"]，每周进展公告，专门介绍Rust语言最近一周的最新重大变动，可供大家参考。里面的内容虽然不全，但颇有代表性。这个网站几经变迁，但是自2013年6月上线时起，两年来，作者cmr坚持每周更新，几乎从未中断。
+
+总之我（Liigo）说Rust的开发“热火朝天”，一点也不夸张。（我还要顺便鄙视Apple公司，发布某某OS新版的时候，动不动就说“新增1500项API”，哎，咱还就较真儿了，去查，算上所有Function、所有Type、Type内的所有Method、所有常量定义—— #define XX 123，你懂的 ——勉强够数！跟Rust的 "~1500 changes" 相比，天上人间。）
+
+大家可以比照近十年在中国大陆和近两年在南中国海的大型基建项目的进展速度，体会Rust那种热火朝天的开发场面。处于这样的开发环境下，所有人都深受鼓舞，所有人都知道，一切都会越来越好，知道所有的欠缺和困难都是暂时的。行动永远比语言有说服力。
+
+“**大刀阔斧**”，用于形容其开发行为豪迈、干脆，持续追求“更好的设计和实现”，无包袱、无迁就。
+只要有了更好的设计（或实现），经过深入讨论和评估之后，果断替换掉旧的设计（或实现）。
+不管这项改动有多复杂、多麻烦，也不理会因此形成的大量不兼容性，勇往直前的行动。
+说去胳膊就去胳膊，说卸腿就卸腿，就是眼睛它也敢摘下来镶个火眼金睛再装回去。牵一发而动全身的事情，干了可不止一次。
+例子有很多，最典型的是libgreen，之前Rust靠它一条腿走路，后来有了libnative，两条腿走路，再后来全都砍掉，最终做到没有运行时(Runtime)。
+其他的例子还有std::io/os/path的大型重构(https://github.com/rust-lang/rfcs/blob/master/text/0517-io-os-reform.md[I/O OS] https://github.com/rust-lang/rfcs/blob/master/text/0474-path-reform.md[Path] Reform)，重新设计然后无缝替换回去（有rustc、servo为证），可谓自己给自己做了大型手术。
+一个新兴的项目，在真正面世之前的开发过程中，如果不经历几次这类大的阵痛，很难说它最终是成熟的和久经考验的。
+如果因为各种顾虑而迁就、保留旧的设计（或实现），很难说最终的产品是完善的和设计优良的。
+如果面世之前都不肯改进，面世定型之后改进的可能性就更小了（束手缚脚），缺陷可能伴随终生，令所有的用户长期的纠结。
+（这种大刀阔斧，与我(Liigo)当年在易语言公司参与研发EF语言时我所主张并践行的观点一致。有意推迟发布1.0也是为了给完善产品留足充裕的时间。）
+
+需要强调的是，Rust开发者大刀阔斧的日子，只发生在Rust 1.0正式版发布之前。1.0之后，他们将老老实实的遵守 http://semver.org/lang/zh-CN/[SemVer 2.0] 规范，再也不会轻易做出破坏代码向后兼容性的行为。本文后面还会谈到这一点。
+
+== 十年勤耕不辍、低调做人高调做事
+
+2006年，创始人Graydon Hoare启动了Rust编程语言项目，利于业余时间开发了三年，完成Rust语言的第一个可用版本。早期的Rust编译器 https://github.com/rust-lang/rust/tree/ef75860a0a72f79f97216f8aaa5b388d98da6480/src/boot[rustboot] 是用OCaml语言开发的。这三年间发生的事情，我们现在知道的并不多。根据创始人对Rust的命名，可以一窥其设计初衷：
+____
+我从很多名称中挑选出了"Rust"。主要受到病原菌的启发——那些令人惊讶的、生死轮回的、多源寄生的奇妙物种。而且"Rust"还有其他内涵：它很好地契合了“贴近金属”(bare metal)、“复古编程语言技术”的主题；它从字面上融合了"Trust"（信任）和"Robust"（健壮）。 —— Graydon Hoare
+____
+
+2009年，Rust项目被Graydon Hoare赠送给（英文原文"was presented to"）Mozilla公司，并得到持续活跃地开发支持。Mozilla创建了以Graydon为首的专业团队全职开发Rust，并且开放源代码。
+
+2010年至2011年，Rust语言的编译器被用Rust语言重写，完成自举，采用LLVM作为编译后端——之前的Rust编译器是用OCaml语言编写的。
+
+2012年1月发布0.1版，第一个面向公众的预览版本问世。从那时起，平均每3个月发布一个新版本，版本号每次只加0.1，改动的内容却往往天翻地覆。2012年到2015年这三年多的时间里，开发者持续不断的改进Rust语言、编译器和标准库，翻新重修，精益求精。不断地否定自己，不断地超越自己，一步一个里程碑。
+
+2012年2月，也就是Rust 0.1刚刚发布不久， https://github.com/servo/servo[Servo]项目被创建，用Rust语言开发下一代浏览器引擎，目的在于验证Rust语言开发大型实用项目的能力。
+
+2012年到2015年这三年多时间，Rust和Servo互相扶持着茁壮成长起来了。Mozilla公司在Rust和Servo这两个不盈利的开源项目上付出的大量人力物力财力和时间成本，体现了他们全力打造下一代全新系统编程语言的决心和气魄。但是他们很少花费精力在大规模宣传和营销上，导致大部分公众/开发者几乎从没听过Rust语言，仅靠长期的口碑相传吸引了一批慧眼识金的忠实的开发者。
+
+Rust不是富二代也不是官二代，它没有一个有钱或有权的爹。Mozilla公司，论资金规模和影响力，远远不及Google、Apple、Microsoft，勉强算是二流公司，但是它依然给予了Rust长期的坚定的支持。
+
+历经近十年精心打造，Rust靠自身实力赢得未来。2015年5月16日，Rust正式发布1.0版本，破茧成蝶，吹响进入新时代的号角。
+
+
+== 定位精准而潜力广泛的应用领域
+
+现今的软件系统开发，从底层到中层到上层，大致分为以下三个层次：
+
+- （底层）系统底层开发：裸金属(bare metal)、操作系统(OS)、内核(kernel)、内核模块(mod)等
+- （中层）系统应用开发：虚拟机(VM)、容器(Container)、数据库/游戏/Web/Ftp/Dns服务器、浏览器引擎、模拟器等
+- （上层）普通应用开发：编译器、浏览器、消息推送系统、Web应用系统、管理信息系统、其他等等
+
+其中，（底层）系统底层开发，强调对底层硬件的控制；（中层）系统应用开发，对CPU和内存的占用十分敏感；（上层）普通应用开发，更倾向于方便快捷的开发效率。通常意义上所说的“系统编程”，往往是指中底层系统开发。
+
+Liigo认为，Rust语言足以胜任这三个层次的软件开发。理由是：Rust是静态类型的编译式语言，基于LLVM生成高度优化的代码，再加上没有垃圾收集器(GC)等额外的运行时开销，执行效率非常高，对内存的利用十分灵活，因而胜任（中层）系统应用开发；Rust具有丰富的语言特性，便捷的项目编译和依赖管理，充分可用的跨平台的标准库，因而胜任（上层）普通应用开发；Rust支持raw pointer、unsafte block、C ffi、asm!、No runtime，因而胜任（底层）系统底层开发。Rust语言特别强调并保证的内存安全，对于三个层次尤其是中底层，是额外的突出的加分项。
+
+上面的论述偏向于理论，可能不如实践有说服力。下面我们看看现实中Rust已经做到了什么程度（不是能做什么，而是做了什么，咱们靠事实说话）：
+
+- 底层开发： https://github.com/charliesome/rustboot[rustboot] https://github.com/ryanra/RustOS[rustos] https://github.com/thepowersgang/rust-barebones-kernel[barebones] http://www.reddit.com/r/programming/comments/342082/cs_honors_thesis_reenix_implementing_a_unixlike/[reenix] http://jvns.ca/blog/2014/03/12/the-rust-os-story/[5steps] https://github.com/rust-lang/rust-wiki-backup/blob/master/Operating-system-development.md[others]
+- 中层开发： https://github.com/servo/servo[Servo]浏览器引擎 https://github.com/PistonDevelopers/piston[Piston]游戏引擎 https://github.com/hyperium/hyper[Hyper]HTTP服务器 https://github.com/pcwalton/sprocketnes[SprocketNES]NES模拟器 https://github.com/nukep/llamadb[LlamaDB]数据库
+- 上层开发： https://github.com/rust-lang/rust/tree/master/src/librustc[Rustc]编译器 https://github.com/rust-lang/cargo[Cargo]项目管理 https://github.com/iron/iron[Iron]&https://github.com/nickel-org/nickel.rs[Nickel]Web开发框架 https://github.com/PistonDevelopers/conrod[Conrod]GUI库 https://github.com/rust-lang/rust-playpen[Playpen]在线编译运行Rust
+
+早在2013年我(Liigo)开始关注Rust之前，那时候Rust还有可选的GC，还有不算小的Runtime，还有笨重的标准库。即使在那种情况下，都有人不断地尝试用Rust做底层开发（参见前面的链接）。后来，Rust有了几个大的动作，令其更加胜任系统底层开发工作：
+
+- 拆分标准库(std)，提取出专门针对底层开发的极其轻量级的核心库(core) https://github.com/rust-lang/rfcs/blob/master/text/0040-libstd-facade.md[RFC #40] https://github.com/rust-lang/rust/issues/13851[Issue #13851: Make std a facade] https://github.com/rust-lang/rust/pull/13901[PR #13901: Refactor libcore out of libstd] https://github.com/rust-lang/rust/issues/11829[old]
+- 移除运行时库 https://github.com/rust-lang/rfcs/blob/master/text/0230-remove-runtime.md[RFC #230] https://github.com/rust-lang/rust/pull/18967[PR #18967: Finish runtime removal] https://github.com/rust-lang/rust/pull/17673[PR #17673: remove librustuv] https://github.com/rust-lang/rust/pull/18557[PR #18557: remove rtio] https://github.com/rust-lang/rust/pull/19654[PR #19654: remove librustrt]
+- 删掉GC https://github.com/rust-lang/rfcs/blob/master/text/0256-remove-refcounting-gc-of-t.md[RFC #256] https://github.com/rust-lang/rust/pull/17666[PR #17666]
+- 放弃分段式栈 https://mail.mozilla.org/pipermail/rust-dev/2013-November/006314.html[Abandoning segmented stacks in Rust]
+- 支持静态编译 https://github.com/mozilla/rust/pull/10528[PR #10528: Add static linking to rust]
+- 添加`#![no_std]`属性 http://doc.rust-lang.org/book/no-stdlib.html[no_std] 允许用户放弃使用(功能丰富但相对笨重的)标准库(std)，选用更底层更轻量级的core,libc,alloc,collections等库，Option/Result/Iterator/Deref/Cell/String/Vec/HashMap等基础类型依然可用。更绝的是，你甚至可以连core也不用，纯裸奔(http://blog.csdn.net/liigo/article/details/39347541[参见本人旧作])。由此可见Rust为支持底层开发不遗余力。能做到这一地步的系统语言还真不多见。
+
+Rust是名副其实的系统编程语言，在这个领域，它不惧怕跟任何对手竞争。向下，Rust可取代C语言地位；居中，Rust可挑战C++市场，向上，Rust可向Java、Python分一杯羹。总之，Rust精准定位于中底层系统应用开发，上可攻下可守，适用范围相当广泛，具有全能型选手的潜质。开发者们学习Rust语言，不怕没有用武之地。
+
+
+== 自举（用Rust语言开发Rust编译器）
+
+Rust在2010年至2011年完成自举，使用Rust语言开发出Rust编译器rustc， https://github.com/rust-lang/rust/commit/6997adf76342b7a6fe03c4bc370ce5fc5082a869/[取代了]之前用OCaml语言开发的Rust编译器rustboot。Rust标准库，很早就是Rust语言写的。这意味着，早在四年前，Rust早期核心开发人员，就已经是全职的Rust程序员了，一天八小时，几乎完全使用Rust语言编程：用Rust开发标准库(和其他库)，用Rust调用标准库开发编译器，用编译器编译标准库和编译器。等到1.0发布时，他们已经是具有多年极其丰富的Rust开发经验的程序员，这期间他们积累的大量设计开发经验和教训，无疑不断地推进了Rust自身的迭代更新。
+
+有人说：没有必要自举，不自举不代表它没有这个能力。这话说的没有太大毛病。但是我们考虑如下两点：
+
+- 1、自举从事实上印证了它（编程语言+编译器）具备这个（强大的）能力，不自举只能在理论上保留它具有这个能力的可能性，两者不在一个层面上，说服力孰强孰弱不言而喻。新语言在大规模推广之前，往往欠缺这种说服力，进而导致推广不利，陷入怪圈不能自拔。
+- 2、自举过程中和自举之后，核心开发者每天使用自己开发的语言工作（开发自己的编译器），不断的在实践中锻造，利于及早发现设计缺陷和不足之处，并及时解决；自举之前，只能每天花费大量的时间和精力，使用其他编程语言开发和维护自己的编译器，学习积累的都是别的语言的经验和教训，缺少在实践中检验自己设计的语言的机会。如果自己设计的语言自己都不去深度地使用，又上哪里获取第一手的反馈信息呢，又如何改善呢。
+
+所以自举越早对编程语言自身发展完善越有利，最好是在自身定型之前尽早自举。
+
+在编程语言自身定型之前尽早自举，这句话说起来容易，实施起来却非常困难。语言不完善，某些功能就可能暂时没法实现；语言不稳定，需要不断的修正和改进，用它写的编译器也需要相应的大量的维护更新甚至重写，是很大的工作负担。所以很多新的编程语言的作者，不愿意（尽早）自举，相应地也就永久失去了自举带来的好处。
+
+我（Liigo）举两个反例：
+
+- 第一个是Google公司的 http://golang.org/[Go语言]，截止到2015年，其编译器和运行时库，包括语言核心数据结构和算法map、channel、scheduler等等，还是用C语言开发的（正陆续替换为Go）——他们的核心开发人员真正用自己开发的Go语言进行实际的大型应用开发的机会并不多。虽然标准库是用Go语言自己写的，但他们却没有大范围使用标准库的经历。实际上，他们缺少使用Go语言的实战开发经验，往往不知道处于开发第一线的用户真正需要什么，无法做到设身处地为程序员着想。缺少使用Go语言的亲身经历，也意味着他们不能在日常开发中，及时发现和改进Go语言设计上的缺陷和不足。
+- 第二个反例是中文编程的翘楚 —— http://www.eyuyan.com/[易语言]，它的编译器、核心支持库、集成开发环境(IDE)，和绝大多数支持库，都是用C语言或C+\+语言开发的，他们的主要开发人员，包括创始人吴涛在内，每天的工作是熟练编写大量C/C++代码，写易语言代码的机会少之又少，即使有也是写一些调用支持库的示例这类浅尝辄止的代码。事实上在易语言研发部，只有庄晓立(Liigo)、袁晓辉(海洋)、龚辟愚(GBB)等少数几位具有较深的易语言功底，其他开发人员进入研发部之前甚至都没听过易语言。吴涛本人早年还写过一些较大的易语言程序，代表作是俄罗斯方块（代码多达500行），后期也很少写了，偶尔写一些Sample代码作为支持库的示例（往往不超过100行）。易语言公司里写易语言代码最多的应该是项目教育培训等部的史世恒、潘春华、季翔、王军、张志恒他们。后来易语言暴露出来一些大的设计缺陷，已经不好修复了，除非伤筋动骨地翻修（放弃向后兼容性）。再后来吴涛组织团队又开发了全新的编程语言“易语言.飞扬”（EF），发布之前用EF语言开发了自己的集成开发环境(IDE)，是一大进步，但依然没有完成自举。后来听说吴涛自己在搞3D游戏引擎(http://vg3d.cn/[Volcano3D])，好强大，希望推出真实的游戏（而非demo）检验其优秀品质。
+
+而Rust语言，偏偏克服了诸多困难，提前4年完成自举，成为是最成功的案例之一，充分的享受了自举的好处，不断地在实践中完善了自身的设计。
+
+没有深度的实践，就没有优秀的设计。除了自举，Rust还有其他的深度实践。
+
+
+== 两个半"大型成功案例": servo, rustc+std, cargo
+
+- **Servo**: 下一代浏览器渲染引擎（类Webkit/Blink），超过40万行Rust代码
+
+Servo是Mozilla公司另外一个独立开发组的项目，启动于2012年初，跟Rust并行开发。多年来，在Rust语言从幼年到少年逐步成长、长期剧烈变动的情况下，Servo居然还能保持正常开发进度，实属不易。Patrick Walton在Servo开发组和Rust开发组都是核心程序员，Servo组的Lars Bergstrom经常参加Rust组的 https://github.com/rust-lang/meeting-minutes/[每周会议]，这保证了两部门的有效沟通。Rust组经常会优先协助解决Servo组遇到的问题，维持Servo开发任务正常推进。
+
+对于Rust而言，Servo项目存在的最大意义就是，它实践并印证了Rust语言具有实际的大中型项目开发能力（而不仅仅停留在理论上），同时获得了珍贵的设计开发经验和教训，反过来进一步促进了Rust自身的发展。Rust语言和标准库逐步发展到今天，许多优秀的设计得以引进，许多有缺陷的设计得以改良，都要感谢Servo这类大型实践项目，在Rust 1.0之前就已经长期存在。试想，如果Rust定型之后才启动Servo项目，实践中发现语言的重大设计缺陷又能怎样，反正木已成舟，悔之晚矣。
+
+Servo已经通过了 https://blog.mozilla.org/research/2014/04/17/another-big-milestone-for-servo-acid2/[Acid2] 标准测试；可以 http://blog.servo.org/2015/04/02/twis-29/[并发渲染] Github/Reddit/CNN 这类大型静态网页，性能 http://www.phoronix.com/scan.php?page=news_item&px=MTgzNDA[明显高于] 当前的Firefox浏览器的Gecko引擎；可以无缝替换基于Chrome的 https://github.com/servo/servo/tree/master/ports/cef[CEF] 框架；已经实验性的应用在Firefox OS平台(https://twitter.com/larsberg_/status/539937229049581568[b2s])。2015年将发布测试版浏览器。Servo有机会成为浏览器历史上里程碑式的产品。
+
+- **rustc+std**: Rust编译器和标准库，超过35万行Rust代码
+
+时至今日，rustc负责编译全世界所有的Rust源代码，包括rustc+std的35万行和servo的40万行，以及crates.io网站上的2000多个第三方库，是名副其实的大型成功项目。
+
+- **Cargo**: Rust的package管理器，项目依赖管理
+
+代码量相比前两者而言要小的多，所以我算它是半个成功案例。代码虽少，但实用性、流行度有过之而无不及。全世界大约99%的Rust项目采用Cargo编译。crates.io网站上有2000多个包，总下载量超150万次。Cargo最大幅度地简化了Rust项目的编译和依赖管理，可以说是目前开发Rust项目的必备工具。
+
+== 十分重视并认真对待1.0版本
+
+Rust 1.0被开发者视为第一个稳定可靠的可应用于商业产品开发的版本。也就是要承诺：现有的大部分语言特性和标准库API要稳定下来，以后不能轻易改变，非得要变得话也得保持向后兼容；功能上要基本全面，至少要满足基本的软件开发需求，不能有明显的欠缺；质量上要有可靠性保证，不能动不动就这里有问题那里有问题。此外，还要给语言将来的发展留足余地。官方博客 http://blog.rust-lang.org/2014/09/15/Rust-1.0.html[Road to Rust 1.0] 对于 1.0 有详细的阐述。
+
+任何认真的新编程语言面临“何时发布1.0版”这个问题时都会感到纠结。发布的越早吧，初级产品没经过多少实际检验，用户量一上来用的人多了，很可能爆出基础设计缺陷，不得已大幅翻修，导致口碑不佳，然后无人问津，项目就算失败了；发布的越晚吧，影响力小用户量一直上不去，也得不到太多实际检验，始终达不到1.0的水平，可能就一直默默无闻下去了。Rust在1.0发布时机上把握的还算比较到位：诞生快十年，高速发展三五年，吸引了一大批用户，自身也经过的“两个半”大型项目的实际检验。要说早，肯定是不早了。Rust没有盲目的早早发布1.0（例如在2012年），是因为他们对1.0期待很高，他们对自己要求很高，他们心里有一杆秤。因为他们是认真的。
+
+为了在2015年5月保质保量发布Rust 1.0，他们提前做了哪些工作？
+
+=== 标准库API的稳定性
+
+Rust为标准库内所有API，即所有fn、所有type(struct/enum/trait)、所有method、所有impl、所有const/static、所有macro_rules!，都逐一标注了稳定性标签：stable、unstable或deprecated。并且声明，1.0版本内包含的所有stable API，都将在SemVer 2.0规范下得到向后兼容性保证，今后所有1.x版本都不会破坏其稳定性（除非遇到重大BUG不得已而为之）。
+
+我们去查Rust开发组公开的会议记录，会发现在2014年6月23日到10月1日，共有8次API review专题会议(https://github.com/rust-lang/rust-wiki-backup/blob/master/Meeting-API-review-2014-06-23.md[0] https://github.com/rust-lang/meeting-minutes/blob/master/Meeting-API-review-2014-07-07.md[1] https://github.com/rust-lang/meeting-minutes/blob/master/Meeting-API-review-2014-07-16.md[2] https://github.com/rust-lang/meeting-minutes/blob/master/Meeting-API-review-2014-07-30.md[3] https://github.com/rust-lang/meeting-minutes/blob/master/Meeting-API-review-2014-08-06.md[4] https://github.com/rust-lang/meeting-minutes/blob/master/Meeting-API-review-2014-08-13.md[5] https://github.com/rust-lang/meeting-minutes/blob/master/Meeting-API-review-2014-09-24.md[6] https://github.com/rust-lang/meeting-minutes/blob/master/Meeting-API-review-2014-10-01.md[7])，逐一审查确定各API的稳定性标签。此后更长的时间里，又不定期的将更多API标注为stable或unstable/deprecated，在rust repo里搜索 https://github.com/rust-lang/rust/search?q=stabilize&type=Issues["stabilize"] 可以得到大批提交记录，显示出这项系统工程显然不是一朝一夕所能完成的。
+
+目前标准库名下stable API大约有2500条，占总数的80%。新生编程语言中能做到这个程度的，很少见。
+
+=== 精益求精的API设计
+
+- Reform: Collections reform(https://github.com/rust-lang/rfcs/blob/master/text/0235-collections-conventions.md[v1: RFC #235] https://github.com/rust-lang/rfcs/blob/master/text/0509-collections-reform-part-2.md[v2: RFC #509]) https://github.com/rust-lang/rfcs/blob/master/text/0369-num-reform.md[RFC #369: num reform] https://github.com/rust-lang/rfcs/blob/master/text/0439-cmp-ops-reform.md[RFC #439: cmp ops reform] https://github.com/rust-lang/rfcs/blob/master/text/0453-macro-reform.md[RFC #453: macro reform] https://github.com/rust-lang/rfcs/blob/master/text/0474-path-reform.md[RFC #474: path] https://github.com/rust-lang/rfcs/blob/master/text/0517-io-os-reform.md[RFC #517: (big) io os reform (including net fs process env osstr etc.)] https://github.com/rust-lang/rfcs/blob/master/text/1040-duration-reform.md[RFC #1040: Duration reform]
+- Revise: https://github.com/rust-lang/rfcs/blob/master/text/0048-traits.md[RFC #48: revised trait matching] https://github.com/rust-lang/rfcs/blob/master/text/0132-ufcs.md[RFC #132: revised UFCS] https://github.com/rust-lang/rust/issues/18469[Issue #18469: revise coercion rules] https://github.com/rust-lang/rust/pull/22435[PR #22435: revise std::thread] https://github.com/rust-lang/rust/pull/11263[PR #11263: revise btree]
+- Stabilize: https://github.com/rust-lang/rust/pull/17029[PR #17029: Vec] https://github.com/rust-lang/rust/pull/17438[PR #17438: String] https://github.com/rust-lang/rust/pull/23549[PR #23549: num] https://github.com/rust-lang/rust/pull/22975[PR #22975: ffi] and https://github.com/rust-lang/rust/search?q=stabilize&type=Issues[others]
+- Entry API: https://github.com/rust-lang/rfcs/blob/master/text/0921-entry_v3.md[RFC #921: entry v3] (https://github.com/rust-lang/rfcs/pull/216[v1] https://github.com/rust-lang/rfcs/pull/247[v2]) https://github.com/rust-lang/rust/pull/22930[PR #22930]
+- String Parterns: https://github.com/rust-lang/rfcs/blob/master/text/0528-string-patterns.md[RFC #528] https://github.com/rust-lang/rust/pull/22466[PR #22466] https://github.com/rust-lang/rust/pull/23952[PR #23952]
+- Audit: https://github.com/rust-lang/rust/issues/22820[Issue #22820] https://github.com/rust-lang/rust/pull/24447[PR #24447] https://github.com/rust-lang/rust/pull/22715[PR #22715] https://github.com/rust-lang/rust/search?&q=Audit&type=Issues[others]
+- API review: https://github.com/rust-lang/meeting-minutes/blob/master/Meeting-API-review-2014-09-24.md[meeting-2014-09-24]
+
+
+=== 精益求精的类型系统设计
+
+- 改进接口匹配算法: https://github.com/rust-lang/rust/pull/17197
+- 新的类型推导机制: https://github.com/rust-lang/rust/pull/15955
+- 逐步完善DST系统: https://github.com/rust-lang/rust/issues/12938
+- 继续 https://github.com/rust-lang/rust/pull/23867[优化] (https://github.com/rust-lang/rfcs/blob/master/text/1023-rebalancing-coherence.md[RFC #1023]) https://github.com/rust-lang/rust/pull/20416[orphan rules]，确保向前兼容（向未来兼容）
+- ...
+
+=== 精益求精的文档和代码复审
+
+- "Guide: Hello Cargo"经过仔细review: https://github.com/rust-lang/rust/pull/15183[PR #15183]
+- "Guide: Strings"经过仔细review: https://github.com/rust-lang/rust/pull/15593[PR #15593]
+- "Guide: Pointers"经过仔细review: https://github.com/rust-lang/rust/pull/15789[PR #15789]
+- "Guide: macros and unsafe"经过仔细review: https://github.com/rust-lang/rust/pull/16331[PR #16331]
+- "A 30-minute Introduction to Rust"经过仔细review: https://github.com/rust-lang/rust/pull/16641[PR #16641]
+- "Rust book: guessing game"经过仔细review: https://github.com/rust-lang/rust/pull/25080[PR #25080]
+- "Rust book: stack and heap"经过仔细review: https://github.com/rust-lang/rust/pull/25292[PR #25292]
+- "Rust book: dining philosophers"经过仔细review: https://github.com/rust-lang/rust/pull/25321[PR #25321]
+- "Rust book: concurrency"经过仔细review: https://github.com/rust-lang/rust/pull/21152[PR #21152]
+- "cross-compiling for iOS"经过仔细review: https://github.com/rust-lang/rust/pull/14715[PR #14751]
+- "regex crate"经过仔细review: https://github.com/rust-lang/rust/pull/13700[PR #13700]
+- "flexible target specification"经过仔细review: https://github.com/rust-lang/rust/pull/16156[PR #16156]
+- "RingBuf"经过仔细review: https://github.com/rust-lang/rust/pull/18747[PR #18747] https://github.com/rust-lang/rust/pull/19569[PR #19569]
+- "HashMap"经过仔细review: https://github.com/rust-lang/rust/pull/16628[PR #16628] https://github.com/rust-lang/rust/pull/19946[PR #19946]
+- "Rustdoc: sidebar tooltips"经过仔细review: https://github.com/rust-lang/rust/pull/20221[PR #20021]
+- "Rewrite associated types"经过仔细review: https://github.com/rust-lang/rust/pull/20307[PR #20307]
+- "new std::path"经过仔细review: https://github.com/rust-lang/rust/pull/21759[PR #21759]
+- "String patterns"经过仔细review: https://github.com/rust-lang/rust/pull/22466[PR #22466]
+- "primitives inherent methods"经过仔细review: https://github.com/rust-lang/rust/pull/23104[PR #23104]
+- "floating-to-decimal formatting"经过仔细review: https://github.com/rust-lang/rust/pull/24612[PR #24612]
+- "Vec::drain"经过仔细review: https://github.com/rust-lang/rust/pull/24781[PR #24781]
+- "Redesign Duration"经过仔细review: https://github.com/rust-lang/rust/pull/24920[PR #24920]
+
+=== 1.0之后的开发计划
+
+1.0是起点而不是终点，1.0之后Rust还将持续不断地开发新的语言特性，打造更完善的标准库。
+
+核心开发者Niko Matsakis在今年4月份发表 http://internals.rust-lang.org/t/priorities-after-1-0/1901[Priorities after 1.0] 一文，详细阐述了1.0之后的开发任务、计划、优先级，内容很多却安排有序，体现了他们对这些问题的深度思考。此文在开发者社区中引起强烈反响，获得热烈讨论。Niko还发表了系列博客文章的第一篇 http://smallcultfollowing.com/babysteps/blog/2015/05/05/where-rusts-enum-shines/["Virtual Structs Part 1: Where Rust’s Enum Shines"]。
+
+
+
+== 精心设计的规范透明的开发流程
+
+在2014年3月之前，Rust开发组并没有十分规范的开发流程，基本过程是这样：修改代码，提交PR，Review，Merger。这样导致的问题是，没有形成设计文档，一旦遇到较大规模的代码改动，别人想理解他的设计思路，首先要读懂他的代码，这给方案评估、代码评审制造了困难，而且容易形成无人理解或难于维护的代码。
+
+从2014年3月开始，Rust引入了规范化的RFC流程。规定，对语言重大改动之前，需先提交RFC文档，写明包括意图、详细设计、优缺点等在内的完整技术方案，供社区集体讨论，最后提交到Rust核心开发组每周的专题会议上评估审核，获得批准之后才进入实施阶段（代码实现）。规范化RFC的好处是，首先形成了完整的技术文档，利于集体讨论、评估（进而优化方案），利于方案实施、后期维护，而且利于核心开发组主导项目进展方向。RFC流程实施一年来，在Rust发展过程中发挥了极其深远的作用，先后通过了一大批十分重要的RFC，有力地推动了Rust语言的革新。
+
+- 6个继承RFC: https://github.com/rust-lang/rfcs/pull/5[PR #5] https://github.com/rust-lang/rfcs/pull/9[PR #9] https://github.com/rust-lang/rfcs/pull/11[PR #11] https://github.com/rust-lang/rfcs/pull/142[PR #142] https://github.com/rust-lang/rfcs/pull/223[PR #223] https://github.com/rust-lang/meeting-minutes/blob/master/weekly-meetings/2014-09-09.md#inheritance[...] 这些都是提案，暂时没有胜出者，所以都没有RFC编号。1.0之后将决出谁是最佳可行方案。
+- associated items: https://github.com/rust-lang/rfcs/blob/master/text/0195-associated-items.md[RFC #195]
+- io os reform: https://github.com/rust-lang/rfcs/blob/master/text/0517-io-os-reform.md[RFC #517]
+- collections reform: https://github.com/rust-lang/rfcs/blob/master/text/0235-collections-conventions.md[v1: RFC #235] https://github.com/rust-lang/rfcs/blob/master/text/0509-collections-reform-part-2.md[v2: RFC #509]
+- Scaling Rust's Governance: https://github.com/rust-lang/rfcs/blob/master/text/1068-rust-governance.md[RFC #1068]
+
+举一个例子，说明社区会主动监督开发流程的规范性和透明度：2014年8月，官方人员aturon居然想偷偷摸摸地把unwrap方法改名为assert， https://github.com/rust-lang/rust/pull/16436[PR #16436: API conventions cleanup](80+)，被网友 http://www.reddit.com/r/rust/comments/2dbg3j/hm_unwrap_is_being_renamed_to_assert/[发现](120+) 后引起极大争议。争议的起因是他们工作透明度不够，事先 https://internals.rust-lang.org/t/settling-some-key-naming-conventions/269[公示](50+) 范围不足，未得到充分讨论。最终这一改动被迫撤消。
+
+
+== 不拘一格聘请专业技术人员
+
+Steve Klabnik之前写过一篇介绍Rust的入门教程 http://www.rustforrubyists.com/book/book.html[Rust for Rubyists]，文风娓娓道来，深得群众喜爱。2014年2月，Rust官方人员看重了他的文档写作才华，付费 https://github.com/rust-lang/rust/issues/9874#issuecomment-35457593[聘请] 他全职为Rust http://www.reddit.com/r/rust/comments/28bew8/rusts_documentation_is_about_to_drastically/[创作文档]。他的主要代表作是Rust官方的 http://doc.rust-lang.org/book/[The Rust Programming Language](Rust Book)，以及大量API Docs。因为其卓越贡献，steveklabnik目前已经是Rust http://blog.rust-lang.org/2014/12/12/Core-Team.html[核心开发组] 成员。
+
+Tilde公司以前开发的Ruby包管理器Bundler在Ruby领域非常流行，其架构设计被实践证实获得成功。2014年3月，Rust官方 https://mail.mozilla.org/pipermail/rust-dev/2014-March/009087.html[宣布] http://www.reddit.com/r/rust/comments/20okr4/rustdev_announcing_the_new_rust_package_manager/[聘请] Tilde公司的核心技术人员Yehuda Katz和Carl Lerche，全职为Rust设计开发全新的开源的 https://github.com/rust-lang/cargo[Cargo]，目标是打造世界级的包管理器("a world-class package manager for Rust")。现在Cargo已经初步获得了很大的成功，还在蓬勃发展中。因为Yehuda Katz的突出贡献，他已经成为Rust http://blog.rust-lang.org/2014/12/12/Core-Team.html[核心开发组] 成员。
+
+深受好评的Rust学习示例网站 http://rustbyexample.com 的早期创建者 Jorge Aparicio(japaric) 后来被邀请 https://github.com/rust-lang/meeting-minutes/blob/master/weekly-meetings/2014-09-02.md#friend-of-the-tree[加入] 了（Mozilla公司的）Rust官方团队。
+
+去 https://github.com/rust-lang/meeting-minutes[meeting-minutes] 里面搜索 "Friend of the Tree" 或 "fott" 你会发现更多人陆续加入了Rust团队。
+
+
+== 大规模的广泛的社区参与
+
+社区用Rust开发的或与Rust相关的开源项目进展地风风火火: https://github.com/servo/servo[Servo], https://github.com/rust-lang/cargo[Cargo], https://github.com/rust-lang/rust-by-example[rust-by-example], https://github.com/hyperium/hyper[Hyper], https://github.com/PistonDevelopers/piston[Piston], https://github.com/uutils/coreutils[coreutils], https://github.com/sfackler/rust-postgres[rust-postgres], https://github.com/gfx-rs/gfx-rs[gfx-rs], https://github.com/PistonDevelopers/conrod[conrod], https://github.com/AngryLawyer/rust-sdl2[rust-sdl2], https://github.com/DaGenix/rust-crypto[rust-crypto], https://github.com/docopt/docopt.rs[docopt.rs], https://github.com/hackndev/zinc[zinc], https://github.com/bjz/gl-rs[gl-rs], https://github.com/phildawes/racer[racer], https://github.com/crabtw/rust-bindgen[rust-bindgen], https://github.com/bjz/glfw-rs[glfw-rs], https://github.com/dwrensha/capnproto-rust[capnproto-rust], https://github.com/Hoverbear/rust-rosetta[rust-rosetta], https://github.com/PistonDevelopers/graphics[graphics], https://github.com/sfackler/rust-openssl[rust-openssl], https://github.com/lifthrasiir/rust-encoding[rust-encoding], https://github.com/PistonDevelopers/hematite[hematite], https://github.com/dwrensha/capnproto-rust[capnproto-rust], https://github.com/tomaka/glium[glium], https://github.com/servo/html5ever[html5ever], https://github.com/tomaka/glutin[glutin], https://github.com/servo/rust-layers[rust-layers], https://github.com/erickt/rust-serde[rust-serde] ……
+
+我上面列出的多是长期以来持续开发和维护的项目，这在Rust语言长期剧烈变动的情况下愈显弥足珍贵。理智的人们不会无缘无故的花费大量时间和精力。许多忠实的第三方开发者长期地投资Rust项目，体现了他们对于Rust语言的热爱和对其前景的看好。
+
+=== 社区合力完成的项目(libextra, diagnostics)：
+
+==== 分解extra库 https://github.com/rust-lang/rust/issues/8784[Issue #8784]：
+
+  - https://github.com/mozilla/rust/pull/11787 (flate)
+  - https://github.com/mozilla/rust/pull/11867 (arena glob)
+  - https://github.com/mozilla/rust/pull/11912 (uuid)
+  - https://github.com/mozilla/rust/pull/11939 (sync)
+  - https://github.com/mozilla/rust/pull/11945 (term)
+  - https://github.com/mozilla/rust/pull/11984 (serialize)
+  - https://github.com/mozilla/rust/pull/12007 (getopts)
+  - https://github.com/mozilla/rust/pull/12010 (collections)
+  - https://github.com/mozilla/rust/pull/12012 (semver)
+  - https://github.com/mozilla/rust/pull/12154 (num)﻿
+  - https://github.com/rust-lang/rust/pull/12200 (base64 hex)
+  - https://github.com/rust-lang/rust/pull/12343 (test)
+  - ...
+
+==== 详解编译错误 https://github.com/rust-lang/rust/issues/24407[Issue #24407]：
+
+  - https://github.com/rust-lang/rust/pull/24431 (E0297, E0301, E0302, E0162, E0165)
+  - https://github.com/rust-lang/rust/pull/24455 (E0152, E0158, E0161, E0170, E0306, E0307)
+  - https://github.com/rust-lang/rust/pull/24482 (E0009)
+  - https://github.com/rust-lang/rust/pull/24488 (E0015, E0020)
+  - https://github.com/rust-lang/rust/pull/24525 (E0018)
+  - https://github.com/rust-lang/rust/pull/24552 (E0133)
+  - https://github.com/rust-lang/rust/pull/24728 (E0271)
+  - https://github.com/rust-lang/rust/pull/24966 (E0282)
+  - https://github.com/rust-lang/rust/pull/24975 (E0079, E0080, E0081, E0082, E0083, E0084)
+  - https://github.com/rust-lang/rust/pull/25190 (E0046, E0054)
+  - https://github.com/rust-lang/rust/pull/25200 (E0062, E0063, E0137)
+  - https://github.com/rust-lang/rust/pull/25272 (E0184, E0204, E0205, E0206, E0243, E0244, E0249, E0250)
+  - https://github.com/rust-lang/rust/pull/25398 (E0053, E0066, E0069, E0251, E0252, E0255, E0256, E0368)
+  - https://github.com/rust-lang/rust/pull/25422 (E0197, E0198, E0199, E0200)
+  - ...
+
+==== 排错语言手册 https://github.com/rust-lang/rust/issues/16676[Issue #16676]
+
+=== 社区广泛参与的大型技术讨论：
+
+==== inherents:
+
+围绕实现“继承”这一语言特性，社区涌现出一批设计方案，一时间争奇斗艳。暂时没有结果，最终决策要在1.0之后才能做出。（括号内是评论数，下同。）
+
+  - https://github.com/rust-lang/rfcs/pull/5[RFC PR #5: Virtual structs](10+)
+  - https://github.com/rust-lang/rfcs/pull/9[RFC PR #9: Fat objects](20+)
+  - https://github.com/rust-lang/rfcs/pull/11[RFC PR #11: Extending enums](10+)
+  - https://github.com/rust-lang/rfcs/pull/142[RFC PR #142: Efficient single inheritance](60+)
+  - https://github.com/rust-lang/rfcs/pull/223[RFC PR #223: Trait based inheritance](40+)
+  - https://internals.rust-lang.org/t/summary-of-efficient-inheritance-rfcs/494[Summary](40+)
+  - inheritance meeting https://github.com/rust-lang/meeting-minutes/blob/d1710f1799e053d5dad99be2d4ee666567056b4e/Meeting-inheritance-2014-09-23.md[2014-09-23] https://github.com/rust-lang/meeting-minutes/blob/99afa26ad073ab42d174c7f4ebd516513062f072/Meeting-inheritance-2014-09-30.md[2014-09-30]
+
+==== scoped thread:
+
+2015年4月11日爆出这个大BUG(https://github.com/rust-lang/rust/issues/24292[Issue #24292])，直接拷问Rust“内存安全”核心概念，当时距离1.0发布已不足5周时间。要知道，刚刚一天前，`std::thread::scoped()`还被 http://blog.rust-lang.org/2015/04/10/Fearless-Concurrency.html[官博] 当作既安全又典雅的优秀API的典型、满怀骄傲地向全世界推介。是不幸，还是该庆幸？我认为该庆幸，有机会消除一个隐患，而不是在不知情中带着重大缺陷进入1.0。
+
+  - https://github.com/rust-lang/rust/issues/24292[Issue #24292: std::thread::JoinGuard (and scoped) are unsound because of reference cycles](30+)
+  - https://github.com/rust-lang/rfcs/pull/1066[RFC #1066: Alter mem::forget to be safe](270+)
+  - https://github.com/rust-lang/rfcs/pull/1084[RFC PR #1084: Scoped threads, take 2](90+)
+  - https://github.com/rust-lang/rfcs/pull/1085[RFC PR #1085: Leak and Destructor Guarantees](70+)
+  - https://github.com/rust-lang/rfcs/pull/1094[RFC PR #1094: Guaranteed non-static destructors](70+)
+  - http://www.reddit.com/r/rust/comments/3404ml/prepooping_your_pants_with_rust/[Pre-Pooping Your Pants With Rust](100+)
+  - http://www.reddit.com/r/rust/comments/34bj7z/on_referencecounting_and_leaks_from_nmatsakiss/[On reference-counting and leaks](110+) and http://smallcultfollowing.com/babysteps/blog/2015/04/30/a-few-more-remarks-on-reference-counting-and-leaks/[a few more]
+
+官方人员一味的强调 Issue #24292 是个例，一味的强调“不保证析构函数务必执行”不违反内存安全，并不能消除群众心中的不安全感。在我看来，官方人员给出的解决方案（RFC PR #1066 #1084）一个是“头痛医头”一个是“脚痛医脚”，反而是民间技术人员提交的方案（RFC PR #1085 #1094）更接地气，至少是朝群众期望的方向努力了。可能是1.0发布日期逼近，实在没有时间评估和实施其他方案，最终官方坚持通过了RFC #1066。这一次我给他们集体评负分。好在他们广泛深入地参与了所有相关的讨论，内部无争议地做出了理性决策，结果未必坏。
+
+==== mutable & unique:
+
+Rust社区对于可变性(mutable)和唯一性(unique)的反思和争议。所有这些话题，都引发了许多热烈的讨论和激烈的争论，火热程度空前。之前 reddit.com/r/rust 内评论数达到200+的极为少见。
+
+  - 先是RFC 58，DaGenix 要求把 &mut 改为 https://github.com/rust-lang/rfcs/pull/58[&only](50+)
+  - 再是 Nicholas 要求彻底取消mut，增加 http://www.reddit.com/r/rust/comments/25i544/babysteps_focusing_on_ownership_or_removing_let/[unique](240+) 引用
+  - 还有pcwalton发出的 http://www.reddit.com/r/rust/comments/2581s5/[追问](180+)：谁表达更清晰，可变性(mutability)还是唯一性(uniqueness)？
+
+==== others
+
+- int/uint => isize/usize:
+- integer overflow:
+- reddit/HN hot posts:
+
+大量的、广泛的、深入的社区技术讨论，体现了人民群众积极参与Rust开源项目的热情。多个体、多角度、多出发点的争论，有利于参与者充分认清同一个技术问题，有利于鉴别各方案的优缺点，有利于折中优选最佳可行方案。优质社区是Rust发展的基石。
+
+当多方争论不相上下的时候，我们发现，Rust拥有一个坚强的核心团队(https://github.com/rust-lang/rust-wiki-backup/blob/master/Note-core-team.md[the core team])，总是会应急出面，充当主心骨，做出最终的理性决策，避免出现互相扯皮却始终一事无成的最坏结局。他们的实力是有目共睹的，他们的信誉是逐步赢得的，他们做出的选择，不一定是最优的，但一定也不差。
+
+
+
+～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
+____
+全文完，感谢！（翻页到这里也不容易呀，顺便吐个槽吧:）~
+____
+～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
