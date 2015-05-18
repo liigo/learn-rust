@@ -354,7 +354,7 @@ Rust社区对于可变性(mutable)和唯一性(unique)的反思和争议。所�
 - int/uint => isize/usize:
 - integer overflow:
 - reddit/HN hot posts:
-- Rust中文社区(http://rust.cc/[rust.cc])
+- Rust中文社区(http://rust.cc/[rust.cc], 新手QQ群:http://qm.qq.com/cgi-bin/qm/qr?k=7JPj8RKFpxCj2tmZ68r8141R2ev5dLJK[303838735])
 
 大量的、广泛的、深入的社区技术讨论，体现了人民群众积极参与Rust开源项目的热情。多个体、多角度、多出发点的争论，有利于参与者充分认清同一个技术问题，有利于鉴别各方案的优缺点，有利于折中优选最佳可行方案。优质社区是Rust发展的基石。
 
