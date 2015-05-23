@@ -39,7 +39,7 @@ Rust语言具有特性丰富、设计优良、适用范围广等诸多优点。
 - 开放系统设计过程，重要设计项目的提出、讨论、评估、决策均在线进行(https://github.com/rust-lang/rfcs[RFCs])
 - 内部决策过程也公开透明，每周发布会议记录(https://github.com/rust-lang/meeting-minutes[meetimg-minutes])
 - 公开接受第三方开发者提交的 https://github.com/rust-lang/rust/pulls[Pull Requests]，必要时还指导开发
-- 有一个核心团队(https://github.com/rust-lang/rust-wiki-backup/blob/master/Note-core-team.md[the core team])负责项目的发展方向和最终决策
+- 有一个核心团队(http://www.rust-lang.org/team.html[the core team])负责项目的发展方向和最终决策
 - 有大量的（超过 https://github.com/rust-lang/rust/blob/master/AUTHORS.txt[1000] 人!）第三方开发者给Rust贡献源代码、文档和测试用例
 - 多次将优秀的第三方开发者吸纳进入官方开发团队和核心团队
 - 多次在世界各地（包括北京）主办和协办小型本地开发者见面会
@@ -260,9 +260,9 @@ Rust为标准库内所有API，即所有fn、所有type(struct/enum/trait)、所
 
 == 不拘一格聘请专业技术人员
 
-Steve Klabnik之前写过一篇介绍Rust的入门教程 http://www.rustforrubyists.com/book/book.html[Rust for Rubyists]，文风娓娓道来，深得群众喜爱。2014年2月，Rust官方人员看重了他的文档写作才华，付费 https://github.com/rust-lang/rust/issues/9874#issuecomment-35457593[聘请] 他全职为Rust http://www.reddit.com/r/rust/comments/28bew8/rusts_documentation_is_about_to_drastically/[创作文档]。他的主要代表作是Rust官方的 http://doc.rust-lang.org/book/[The Rust Programming Language](Rust Book)，以及大量API Docs。因为其卓越贡献，steveklabnik目前已经是Rust http://blog.rust-lang.org/2014/12/12/Core-Team.html[核心开发组] 成员。
+Steve Klabnik之前写过一篇介绍Rust的入门教程 http://www.rustforrubyists.com/book/book.html[Rust for Rubyists]，文风娓娓道来，深得群众喜爱。2014年2月，Rust官方人员看重了他的文档写作才华，付费 https://github.com/rust-lang/rust/issues/9874#issuecomment-35457593[聘请] 他全职为Rust http://www.reddit.com/r/rust/comments/28bew8/rusts_documentation_is_about_to_drastically/[创作文档]。他的主要代表作是Rust官方的 http://doc.rust-lang.org/book/[The Rust Programming Language](Rust Book)，以及大量API Docs。因为其卓越贡献，steveklabnik目前已经 http://blog.rust-lang.org/2014/12/12/Core-Team.html[成为] http://www.rust-lang.org/team.html[Rust核心开发组] 八成员之一。
 
-Tilde公司以前开发的Ruby包管理器Bundler在Ruby领域非常流行，其架构设计被实践证实获得成功。2014年3月，Rust官方 https://mail.mozilla.org/pipermail/rust-dev/2014-March/009087.html[宣布] http://www.reddit.com/r/rust/comments/20okr4/rustdev_announcing_the_new_rust_package_manager/[聘请] Tilde公司的核心技术人员Yehuda Katz和Carl Lerche，全职为Rust设计开发全新的开源的 https://github.com/rust-lang/cargo[Cargo]，目标是打造世界级的包管理器("a world-class package manager for Rust")。现在Cargo已经初步获得了很大的成功，还在蓬勃发展中。因为Yehuda Katz的突出贡献，他已经成为Rust http://blog.rust-lang.org/2014/12/12/Core-Team.html[核心开发组] 成员。
+Tilde公司以前开发的Ruby包管理器Bundler在Ruby领域非常流行，其架构设计被实践证实获得成功。2014年3月，Rust官方 https://mail.mozilla.org/pipermail/rust-dev/2014-March/009087.html[宣布] http://www.reddit.com/r/rust/comments/20okr4/rustdev_announcing_the_new_rust_package_manager/[聘请] Tilde公司的核心技术人员Yehuda Katz和Carl Lerche，全职为Rust设计开发全新的开源的 https://github.com/rust-lang/cargo[Cargo]，目标是打造世界级的包管理器("a world-class package manager for Rust")。现在Cargo已经初步获得了很大的成功，还在蓬勃发展中。因为Yehuda Katz的卓越贡献，他已经 http://blog.rust-lang.org/2014/12/12/Core-Team.html[成为] http://www.rust-lang.org/team.html[Rust核心开发组] 八成员之一。
 
 深受好评的Rust学习示例网站 http://rustbyexample.com 的早期创建者 Jorge Aparicio(japaric) 后来被邀请 https://github.com/rust-lang/meeting-minutes/blob/master/weekly-meetings/2014-09-02.md#friend-of-the-tree[加入] 了（Mozilla公司的）Rust官方团队。
 
@@ -354,11 +354,11 @@ Rust社区对于可变性(mutable)和唯一性(unique)的反思和争议。所�
 - int/uint => isize/usize:
 - integer overflow:
 - reddit/HN hot posts:
-- Rust中文社区(http://rust.cc/[rust.cc], 新手QQ群:http://qm.qq.com/cgi-bin/qm/qr?k=7JPj8RKFpxCj2tmZ68r8141R2ev5dLJK[303838735])
+- Rust中文社区(http://rust.cc/[rust.cc])，新手QQ群(http://qm.qq.com/cgi-bin/qm/qr?k=7JPj8RKFpxCj2tmZ68r8141R2ev5dLJK[303838735])
 
 大量的、广泛的、深入的社区技术讨论，体现了人民群众积极参与Rust开源项目的热情。多个体、多角度、多出发点的争论，有利于参与者充分认清同一个技术问题，有利于鉴别各方案的优缺点，有利于折中优选最佳可行方案。优质社区是Rust发展的基石。
 
-当多方争论不相上下的时候，我们发现，Rust拥有一个坚强的核心团队(https://github.com/rust-lang/rust-wiki-backup/blob/master/Note-core-team.md[the core team])，总是会应急出面，充当主心骨，做出最终的理性决策，避免出现互相扯皮却始终一事无成的最坏结局。他们的实力是有目共睹的，他们的信誉是逐步赢得的，他们做出的选择，不一定是最优的，但一定也不差。
+当多方争论不相上下的时候，我们发现，Rust拥有一个坚强的核心团队(http://www.rust-lang.org/team.html[the core team])，总是会应急出面，充当主心骨，做出最终的理性决策，避免出现互相扯皮却始终一事无成的最坏结局。他们的实力是有目共睹的，他们的信誉是逐步赢得的，他们做出的选择，不一定是最优的，但一定也不差。
 
 
 
