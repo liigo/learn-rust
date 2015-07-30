@@ -159,7 +159,9 @@ Rust在2010年至2011年完成自举，使用Rust语言开发出Rust编译器rus
 
 == 两个半"大型成功案例": servo, rustc+std, cargo
 
-- **Servo**: 下一代浏览器渲染引擎（类Webkit/Blink），超过40万行Rust代码
+（作者Liigo注：本节以下有关代码行数的数据于2015年7月30日得到修正，详情另见 http://blog.csdn.net/liigo/article/details/47103577[关于Servo项目中Rust代码行数的数据来源] 一文。）
+
+- **Servo**: 下一代浏览器渲染引擎（类Webkit/Blink），超过25万行Rust代码
 
 Servo是Mozilla公司另外一个独立开发组的项目，启动于2012年初，跟Rust并行开发。多年来，在Rust语言从幼年到少年逐步成长、长期剧烈变动的情况下，Servo居然还能保持正常开发进度，实属不易。Patrick Walton在Servo开发组和Rust开发组都是核心程序员，Servo组的Lars Bergstrom经常参加Rust组的 https://github.com/rust-lang/meeting-minutes/[每周会议]，这保证了两部门的有效沟通。Rust组经常会优先协助解决Servo组遇到的问题，维持Servo开发任务正常推进。
 
@@ -167,21 +169,13 @@ Servo是Mozilla公司另外一个独立开发组的项目，启动于2012年初�
 
 Servo已经通过了 https://blog.mozilla.org/research/2014/04/17/another-big-milestone-for-servo-acid2/[Acid2] 标准测试；可以 http://blog.servo.org/2015/04/02/twis-29/[并发渲染] Github/Reddit/CNN 这类大型静态网页，性能 http://www.phoronix.com/scan.php?page=news_item&px=MTgzNDA[明显高于] 当前的Firefox浏览器的Gecko引擎；可以无缝替换基于Chrome的 https://github.com/servo/servo/tree/master/ports/cef[CEF] 框架；已经实验性的应用在Firefox OS平台(https://twitter.com/larsberg_/status/539937229049581568[b2s])。2015年将发布测试版浏览器。Servo有机会成为浏览器历史上里程碑式的产品。
 
-- **rustc+std**: Rust编译器和标准库，超过35万行Rust代码
+- **rustc+std**: Rust编译器和标准库，超过30万行Rust代码
 
-时至今日，rustc负责编译全世界所有的Rust源代码，包括rustc+std的35万行和servo的40万行，以及crates.io网站上的2000多个第三方库，是名副其实的大型成功项目。
+时至今日，rustc负责编译全世界所有的Rust源代码，包括rustc+std的30万行和servo的25万行，以及crates.io网站上的2000多个第三方库，是名副其实的大型成功项目。
 
 - **Cargo**: Rust的package管理器，项目依赖管理
 
 代码量相比前两者而言要小的多，所以我算它是半个成功案例。代码虽少，但实用性、流行度有过之而无不及。全世界大约99%的Rust项目采用Cargo编译。crates.io网站上有2000多个包，总下载量超150万次。Cargo最大幅度地简化了Rust项目的编译和依赖管理，可以说是目前开发Rust项目的必备工具。
-
-=== 关于Servo项目中Rust代码行数的数据来源
-
-- 来源1 http://arxiv.org/abs/1505.07383["Experience Report: Developing the Servo Web Browser Engine using Rust"] 说有41万行(410K) 2015年5月26日
-- 来源2 http://blogs.s-osg.org/servo-continues-pushing-forward/["Servo Continues Pushing Forward"] 说有12.6万行(126K) 2015年5月1日
-- 来源3 http://blog.servo.org/2015/07/22/environment/["Servo developer tools overview"] 说有15万行(150k) 2015年7月22日
-
-这三个来源都具有很高的权威性，来源1的主要作者包括了Rust项目负责人Brian Anderson和Servo项目负责人Lars Bergstrom，来源2出自Servo项目的合作方三星Samsung OSG官方博客，来源3是Servo项目的官方博客。数据都很新，均是2015年5月或之后数据。三种说法有冲突，可能是统计分类标准不同所导致的。本文最初版本采纳了来源1，现在我(Liigo)更倾向于采纳来源3。综合三种来源，我猜测认为，Servo项目自身——不包括其依赖库——的源代码行数大概是15万行，Rust编译器和标准库和Servo依赖的Rust库总共加起来有大约36万行（对应上文所述"超过35万行"）。这样算起来rustc+std也必然远少于36万行，但数据来源似乎没有统计这一块。此外也没有专门统计Servo的依赖库（不包含std）代码行数——来源1提到有大概20个Rust库——我觉得这类代码是可以算进Servo项目里面的，那么Servo的代码行数将远超15万。总之，本文前面提供的有关两个大型项目源代码行数的统计数字可能有重复和错误之处，但在有明确的准确数字出现之前暂不更正，特此说明。Liigo, 2015年7月28日。
 
 
 == 十分重视并认真对待1.0版本
