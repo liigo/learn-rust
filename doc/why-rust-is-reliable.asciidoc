@@ -20,7 +20,7 @@ http://www.rust-lang.org/[Rust](http://blog.rust-lang.org/[blog])是一门强调
 - Concurrency without data races
 - Abstraction without overhead
 
-除此之外，我再补充一些关键词，以便读者更直观地了解Rust：静态类型/编译式语言/静态编译/动态编译、泛型/函数式/面向对象、模式匹配/ADT、DST/HKT/Associated Types/闭包(Closures)、Static/Dynamic/Multiple-Dispatch、
+除此之外，我再补充一些关键词，以便读者更直观地了解Rust：静态类型/编译式语言/静态编译/动态编译、泛型/函数式/面向对象、模式匹配/ADT、DST/Associated Types/闭包(Closures)、Static/Dynamic/Multiple-Dispatch、
 没有虚拟机(VM)、没有垃圾收集器(GC)、没有运行时(Runtime)、没有空指针/野指针/内存越界/缓冲区溢出/段错误、没有数据竞争(Data Race)……
 
 Rust语言具有特性丰富、设计优良、适用范围广等诸多优点。
