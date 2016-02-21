@@ -12,6 +12,8 @@
 [c]: http://blog.csdn.net/liigo
 [r]: https://plus.google.com/communities/100629002107624231185
 
+> 2015年5月20日译者Liigo注：此文形成于Rust 1.0之前的开发动荡期，目前已经严重过时（outdated）！相关设施在Rust 1.0标准化过程中发生了巨大变化（参见[RFC #230](https://github.com/rust-lang/rfcs/blob/master/text/0230-remove-runtime.md)），Runtime已经不存在了。特此声明，以免误导读者。
+
 Rust编程语言的标准发行版包含两个运行时库（libgreen和libnative），提供I/O等基础设施的统一接口。但对Rust语言本身而言，运行时（runtime）并不是必需的；Rust编译器可以生成在所有环境中运行的代码，包括内核（kernel）环境。Rust语言也不需要运行时提供内存安全，因为它的类型系统本身已经足够安全——通过编译时静态验证给予保证。运行时只是利用语言的安全特性提供一系列便利的、安全的、高层的抽象。
 
 如果Rust没有运行时（runtime），我们编程能做的事情非常有限，所以Rust需要提供运行时。这份指导手册将探讨Rust用户空间（user-space）的运行时、如何使用它、它能做什么。
