@@ -9,6 +9,10 @@ version 1.0, 2015.
 版权声明：未经作者许可不得转载；授权转载需注明出处。
 ....
 
+****
+**2016年2月22日修补说明**：本文最初发表至今已逾半年，这期间Rust语言蓬勃发展，版本从1.0升级到了1.6（1.7也近在咫尺），变化很大。现借《程序员》杂志3月刊发行之际对原文做一些修订和增补，其中增补部分在文中有明确标记。
+****
+
 序言：本文试图帮您解答“我要不要（投入大量时间和精力）学习Rust语言？”这个问题。作者尽量较少的谈及Rust语言本身，反而尝试从Rust语言周边入手，长时间、大范围、多角度地考察，研判Rust语言是否靠谱，并给出尽可能客观的理由。为写成本文，作者Liigo不惜“卧底”Rust“老巢”长达一年多，收集整理总结了大量信息。如果嫌长，可以只看小标题，粗略浏览一番。
 
 
@@ -149,8 +153,8 @@ Rust在2010年至2011年完成自举，使用Rust语言开发出Rust编译器rus
 
 我（Liigo）举两个反例：
 
-- 第一个是Google公司的 http://golang.org/[Go语言]，截止到2015年本文发表时，其编译器和运行时库，包括语言核心数据结构和算法map、channel、scheduler等等，还是用C语言开发的（正陆续替换为Go）——他们的核心开发人员真正用自己开发的Go语言进行实际的大型应用开发的机会并不多。虽然标准库是用Go语言自己写的，但他们却没有大范围使用标准库的经历。实际上，他们缺少使用Go语言的实战开发经验，往往不知道处于开发第一线的用户真正需要什么，无法做到设身处地为程序员着想。缺少使用Go语言的亲身经历，也意味着他们不能在日常开发中，及时发现和改进Go语言设计上的缺陷和不足。
-- 第二个反例是中文编程的翘楚 —— http://www.eyuyan.com/[易语言]，它的编译器、核心支持库、集成开发环境(IDE)，和绝大多数支持库，都是用C语言或C+\+语言开发的，他们的主要开发人员，包括创始人吴涛在内，每天的工作是熟练编写大量C/C++代码，写易语言代码的机会少之又少，即使有也是写一些调用支持库的示例这类浅尝辄止的代码。事实上在易语言研发部，只有庄晓立(Liigo)、袁晓辉(海洋)、龚辟愚(GBB)等少数几位具有较深的易语言功底，其他开发人员进入研发部之前甚至都没听过易语言。吴涛本人早年还写过一些较大的易语言程序，代表作是俄罗斯方块（代码多达500行），后期也很少写了，偶尔写一些Sample代码作为支持库的示例（往往不超过100行）。易语言公司里写易语言代码最多的应该是项目教育培训等部的史世恒、潘春华、季翔、王军、张志恒他们。后来易语言暴露出来一些大的设计缺陷，已经不好修复了，除非伤筋动骨地翻修（放弃向后兼容性）。再后来吴涛组织团队又开发了全新的编程语言“易语言.飞扬”（EF），发布之前用EF语言开发了自己的集成开发环境(IDE)，是一大进步，但依然没有完成自举。后来听说吴涛自己在搞3D游戏引擎(http://vg3d.cn/[Volcano3D])，好强大，希望推出真实的游戏（而非demo）检验其优秀品质。
+- 第一个是Google公司的 http://golang.org/[Go语言]，截止到2015年本文发表时，其编译器和运行时库，包括语言核心数据结构和算法map、channel、scheduler等等，还是用C语言开发的（Liigo补记：2015年8月1.5版本之后才替换为Go）——他们的核心开发人员真正用自己开发的Go语言进行实际的大型应用开发的机会并不多。虽然标准库是用Go语言自己写的，但他们却没有大范围使用标准库的经历。实际上，他们缺少使用Go语言的实战开发经验，往往不知道处于开发第一线的用户真正需要什么，无法做到设身处地为程序员着想。缺少使用Go语言的亲身经历，也意味着他们不能在日常开发中，及时发现和改进Go语言设计上的缺陷和不足。
+- 第二个反例是中文编程的翘楚 —— http://www.eyuyan.com/[易语言]，它的编译器、核心支持库、集成开发环境(IDE)，和绝大多数支持库，都是用C语言或C+\+语言开发的，他们的主要开发人员，包括创始人吴涛在内，每天的工作是熟练编写大量C/C++代码，写易语言代码的机会少之又少，即使有也是写一些调用支持库的示例这类浅尝辄止的代码。事实上在易语言研发部，只有庄晓立(Liigo)、袁晓辉(海洋)、龚辟愚(GBB)等少数几位开发者具有较深的易语言功底，其他开发人员进入研发部之前甚至都没听过易语言。吴涛本人早年还写过一些较大的易语言程序，代表作是俄罗斯方块（代码多达500行），后期也很少写了，偶尔写一些Sample代码作为支持库的示例（往往不超过100行）。易语言公司里写易语言代码最多的应该是项目教育培训等部的史世恒、潘春华、季翔、王军、张志恒他们。后来易语言暴露出来一些大的设计缺陷，已经不好修复了，除非伤筋动骨地翻修（放弃向后兼容性）。再后来吴涛组织团队又开发了全新的编程语言“易语言.飞扬”（EF），发布之前用EF语言开发了自己的集成开发环境(IDE)，是一大进步，但依然没有完成自举。后来听说吴涛自己一个人在搞3D游戏引擎(http://vg3d.cn/[Volcano3D])，气场强大，希望推出真实的游戏（而非demo）检验其优秀品质。
 
 而Rust语言，偏偏克服了诸多困难，提前4年完成自举，成为是最成功的案例之一，充分的享受了自举的好处，不断地在实践中完善了自身的设计。
 
@@ -180,7 +184,7 @@ Servo已经通过了 https://blog.mozilla.org/research/2014/04/17/another-big-mi
 
 == 十分重视并认真对待1.0版本
 
-Rust 1.0被开发者视为第一个稳定可靠的可用于生产环境的版本。也就是要承诺：现有的大部分语言特性和标准库API要稳定下来，以后不能轻易改变，非得要变得话也得保持向后兼容；功能上要基本全面，至少要满足基本的软件开发需求，不能有明显的欠缺；质量上要有可靠性保证，不能动不动就这里有问题那里有问题。此外，还要给语言将来的发展留足余地。官方博客 http://blog.rust-lang.org/2014/09/15/Rust-1.0.html[Road to Rust 1.0] 对于 1.0 有详细的阐述。
+Rust 1.0被开发者视为第一个稳定可靠的可用于生产环境的正式版本。也就是要承诺：现有的大部分语言特性和标准库API要稳定下来，以后不能轻易改变，非得要变得话也得保持向后兼容；功能上要基本全面，至少要满足基本的软件开发需求，不能有明显的欠缺；质量上要有可靠性保证，不能动不动就这里有问题那里有问题。此外，还要给语言将来的发展留足余地。官方博客 http://blog.rust-lang.org/2014/09/15/Rust-1.0.html[Road to Rust 1.0] 对于 1.0 有详细的阐述。
 
 任何认真的新编程语言面临“何时发布1.0版”这个问题时都会感到纠结。发布的越早吧，初级产品没经过多少实际检验，用户量一上来用的人多了，很可能爆出基础设计缺陷，不得已大幅翻修，导致口碑不佳，然后无人问津，项目就算失败了；发布的越晚吧，影响力小用户量一直上不去，也得不到太多实际检验，始终达不到1.0的水平，可能就一直默默无闻下去了。Rust在1.0发布时机上把握的还算比较到位：诞生快十年，高速发展三五年，吸引了一大批用户，自身也经过的“两个半”大型项目的实际检验。要说早，肯定是不早了。Rust没有盲目的早早发布1.0（例如在2012年），是因为他们对1.0期待很高，他们对自己要求很高，他们心里有一杆秤。因为他们是认真的。
 
@@ -193,6 +197,10 @@ Rust为标准库内所有API，即所有fn、所有type(struct/enum/trait)、所
 我们去查Rust开发组公开的会议记录，会发现在2014年6月23日到10月1日，共有8次API review专题会议(https://github.com/rust-lang/rust-wiki-backup/blob/master/Meeting-API-review-2014-06-23.md[0] https://github.com/rust-lang/meeting-minutes/blob/master/Meeting-API-review-2014-07-07.md[1] https://github.com/rust-lang/meeting-minutes/blob/master/Meeting-API-review-2014-07-16.md[2] https://github.com/rust-lang/meeting-minutes/blob/master/Meeting-API-review-2014-07-30.md[3] https://github.com/rust-lang/meeting-minutes/blob/master/Meeting-API-review-2014-08-06.md[4] https://github.com/rust-lang/meeting-minutes/blob/master/Meeting-API-review-2014-08-13.md[5] https://github.com/rust-lang/meeting-minutes/blob/master/Meeting-API-review-2014-09-24.md[6] https://github.com/rust-lang/meeting-minutes/blob/master/Meeting-API-review-2014-10-01.md[7])，逐一审查确定各API的稳定性标签。此后更长的时间里，又不定期的将更多API标注为stable或unstable/deprecated，在rust repo里搜索 https://github.com/rust-lang/rust/search?q=stabilize&type=Issues["stabilize"] 可以得到大批提交记录，显示出这项系统工程显然不是一朝一夕所能完成的。
 
 目前标准库名下stable API大约有2500条，占总数的80%。新生编程语言中能做到这个程度的，很少见。
+
+增补：针对稳定版API的修改，怎样的修改是向后兼容的、怎样的修改是破坏兼容性的呢？ https://github.com/rust-lang/rfcs/blob/master/text/1105-api-evolution.md[RFC #1105] 给出了非常详尽的说明和指导。而且Rust还有一个叫Crater的工具，负责检测某项修改是否破坏了兼容性，其工作原理是，借助集成测试环境，以该项修改为基础构建临时Rust工具链，用之逐一编译crates.io网站上的三千多个Rust开源项目，只要有一个不通过，就说明该项修改存在破坏兼容性的可能。许多代码提交后首先要经过Crater的检验才可能被正式接纳（案例： https://github.com/rust-lang/rust/pull/29498[PR #29498] https://github.com/rust-lang/rust/pull/30796[PR #30796] ）。
+
+增补：Rust在1.0发布之前筹划实施了类似Chrome的滚动式版本升级计划(https://github.com/rust-lang/rfcs/blob/master/text/0507-release-channels.md[RFC #507])。nightly版本6周后升级为beta版本，beta版本6周后升级为stable版本。新提交到创库里的代码，必然经过nightly和beta两个周期，经过总共约12周的测试和过渡期，才会正式进入stable版本。许多核心开发者都是基于nightly版本工作的，还有很有用beta版本的开发者，再加上完善的travis-ci测试，基本可以保证在stable发布之前发现并修正存在的问题，确保stable版本的可靠性。
 
 === 精益求精的API设计
 
@@ -261,6 +269,15 @@ Rust为标准库内所有API，即所有fn、所有type(struct/enum/trait)、所
 举一个例子，说明社区会主动监督开发流程的规范性和透明度：2014年8月，官方人员aturon居然想偷偷摸摸地把unwrap方法改名为assert， https://github.com/rust-lang/rust/pull/16436[PR #16436: API conventions cleanup](80+)，被网友 http://www.reddit.com/r/rust/comments/2dbg3j/hm_unwrap_is_being_renamed_to_assert/[发现](120+) 后引起极大争议。争议的起因是他们工作透明度不够，事先 https://internals.rust-lang.org/t/settling-some-key-naming-conventions/269[公示](50+) 范围不足，未得到充分讨论。最终这一改动被迫撤消。
 
 
+增补：1.0发布前后筹备创建了Sub Teams，整合了各细分领域的开发专家，负责所属领域的RFC设计、讨论、评估、决策，令过程更专业化。之前的Core Team，只有少数几位官方核心开发人员，地位相当于我党的政治局常委会，技术、能力、威望都很牛逼，但随着开发规模的扩大，他们自己也忙的团团转，疲于参与呈爆发式增长的RFC，工作效率不高，况且他们未必在所有细分领域都是专家，一把抓并不理想。组建Language Design Team, Library Team, Compiler Team, Tooling and Infrastructure Team, Community Team, Moderation Team 等 Sub Teams之后，各自吸纳了来自官方和民间的细分领域专家，可以更加专业化更有针对性的处理本领域的RFC，同时给Core Team节省出宝贵的精力去处理更核心的工作（Sub Teams有时上报某些重要RFC给Core Team决策）。参见 https://github.com/rust-lang/rfcs/blob/master/text/1068-rust-governance.md[RFC #1068]。
+
+增补：1.0发布后对每周技术例会(https://github.com/rust-lang/meeting-minutes[meetimg-minutes])做了较大调整。之前的惯例是，民间开发人员在RFC页面上讨论，然后Core Team开发人员在每周例会上讨论并决策，最后公布会议记录。之后的惯例是，民间和官方人员一起在RFC页面讨论，然后Sub team闭门决策（必要时Core Team介入），最后公布决策结果。调整之后，讨论更民主化、透明化，决策更集中化，提升了工作效率。
+
+增补：（2014年那时候，北京时间每周三凌晨Core Team发布会议记录，每周三就是我(Liigo)的节日，早上起床看Core Team的技术讨论和决策过程，持续了大约一年，现在还是美好的回忆。后来Sub Teams的会议记录通常只剩下决策结果，没有技术讨论过程了，而且他们的发布间隔也延长到两周左右。）
+
+增补：1.0发布后为RFC增设了 “Final Comment Period (FCP)” 窗口期，并及时公告，使得关注该RFC的开发者不会轻易错过决策前的最后集中讨论阶段。这也是提供开发透明度的一项措施。同样参见 https://github.com/rust-lang/rfcs/blob/master/text/1068-rust-governance.md[RFC #1068]。
+
+
 == 不拘一格聘请专业技术人员
 
 Steve Klabnik之前写过一篇介绍Rust的入门教程 http://www.rustforrubyists.com/book/book.html[Rust for Rubyists]，文风娓娓道来，深得群众喜爱。2014年2月，Rust官方人员看重了他的文档写作才华，付费 https://github.com/rust-lang/rust/issues/9874#issuecomment-35457593[聘请] 他全职为Rust http://www.reddit.com/r/rust/comments/28bew8/rusts_documentation_is_about_to_drastically/[创作文档]。他的主要代表作是Rust官方的 http://doc.rust-lang.org/book/[The Rust Programming Language](Rust Book)，以及大量API Docs。因为其卓越贡献，steveklabnik目前已经 http://blog.rust-lang.org/2014/12/12/Core-Team.html[成为] http://www.rust-lang.org/team.html[Rust核心开发组] 八成员之一。
@@ -269,7 +286,7 @@ Tilde公司以前开发的Ruby包管理器Bundler在Ruby领域非常流行，其
 
 深受好评的Rust学习示例网站 http://rustbyexample.com 的早期创建者 Jorge Aparicio(japaric) 后来被邀请 https://github.com/rust-lang/meeting-minutes/blob/master/weekly-meetings/2014-09-02.md#friend-of-the-tree[加入] 了（Mozilla公司的）Rust官方团队。
 
-去 https://github.com/rust-lang/meeting-minutes[meeting-minutes] 里面搜索 "Friend of the Tree" 或 "fott" 你会发现更多人陆续加入了Rust团队。
+去 https://github.com/rust-lang/meeting-minutes[meeting-minutes] 里面搜索 "Friend of the Tree" 或 "fott" 你会发现更多人陆续加入了Rust开发团队。
 
 
 == 大规模的广泛的社区参与
